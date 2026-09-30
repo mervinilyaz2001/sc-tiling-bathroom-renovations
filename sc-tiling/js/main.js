@@ -242,6 +242,7 @@
     const baAfter = document.getElementById("baAfter");
     const baHandle = document.getElementById("baHandle");
     const baRange = document.getElementById("baRange");
+
     let baDragging = false;
 
     const setBA = (pct) => {
@@ -257,23 +258,32 @@
       }
     };
 
-    const pctFromEvent = (clientX) => {
+    const pctFromX = (clientX) => {
       const rect = baSlider.getBoundingClientRect();
       return ((clientX - rect.left) / rect.width) * 100;
     };
 
-    baSlider.addEventListener("pointerdown", (e) => {
+    baSlider.addEventListener("mousedown", (e) => {
       baDragging = true;
-      baSlider.setPointerCapture(e.pointerId);
-      setBA(pctFromEvent(e.clientX));
+      setBA(pctFromX(e.clientX));
+      e.preventDefault();
     });
-    baSlider.addEventListener("pointermove", (e) => {
+    window.addEventListener("mousemove", (e) => {
       if (!baDragging) return;
-      setBA(pctFromEvent(e.clientX));
+      setBA(pctFromX(e.clientX));
     });
-    ["pointerup", "pointercancel"].forEach(evt =>
-      baSlider.addEventListener(evt, () => { baDragging = false; })
-    );
+    window.addEventListener("mouseup", () => { baDragging = false; });
+
+    baSlider.addEventListener("touchstart", (e) => {
+      baDragging = true;
+      setBA(pctFromX(e.touches[0].clientX));
+    }, { passive: true });
+    window.addEventListener("touchmove", (e) => {
+      if (!baDragging) return;
+      setBA(pctFromX(e.touches[0].clientX));
+    }, { passive: true });
+    window.addEventListener("touchend", () => { baDragging = false; });
+
     baRange.addEventListener("input", (e) => setBA(Number(e.target.value)));
 
     setBA(50);
