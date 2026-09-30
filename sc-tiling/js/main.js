@@ -238,7 +238,6 @@
   /* ============ BEFORE / AFTER SLIDER ============ */
   const baSlider = document.getElementById("baSlider");
   if (baSlider) {
-    const baBefore = document.getElementById("baBefore");
     const baAfter = document.getElementById("baAfter");
     const baHandle = document.getElementById("baHandle");
     const baRange = document.getElementById("baRange");
@@ -249,13 +248,7 @@
       pct = Math.min(100, Math.max(0, pct));
       baHandle.style.left = pct + "%";
       baRange.value = pct;
-      const t = pct / 100;
-      baBefore.style.opacity = t;
-      baAfter.style.opacity = 1 - t;
-      if (!prefersReducedMotion) {
-        baBefore.style.transform = `scale(${1 + t * 0.12})`;
-        baAfter.style.transform = `scale(${1 + (1 - t) * 0.12})`;
-      }
+      baAfter.style.clipPath = `inset(0 0 0 ${pct}%)`;
     };
 
     const pctFromX = (clientX) => {
