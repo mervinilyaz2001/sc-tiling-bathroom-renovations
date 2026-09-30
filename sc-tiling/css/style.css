@@ -476,6 +476,7 @@ button{ font-family:inherit; cursor:pointer; }
   border-radius: 999px;
   backdrop-filter: blur(4px);
   pointer-events:none;
+  transition: opacity .2s ease;
 }
 .ba-tag-before{ left:20px; }
 .ba-tag-after{ right:20px; }

@@ -241,6 +241,9 @@
     const baAfter = document.getElementById("baAfter");
     const baHandle = document.getElementById("baHandle");
     const baRange = document.getElementById("baRange");
+    const baTagBefore = document.getElementById("baTagBefore");
+    const baTagAfter = document.getElementById("baTagAfter");
+    const baFadeZone = 22;
 
     let baDragging = false;
 
@@ -249,6 +252,8 @@
       baHandle.style.left = pct + "%";
       baRange.value = pct;
       baAfter.style.clipPath = `inset(0 0 0 ${pct}%)`;
+      baTagBefore.style.opacity = Math.min(1, pct / baFadeZone);
+      baTagAfter.style.opacity = Math.min(1, (100 - pct) / baFadeZone);
     };
 
     const pctFromX = (clientX) => {
