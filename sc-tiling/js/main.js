@@ -235,4 +235,48 @@
     setTimeout(() => formSuccess.classList.remove("show"), 5000);
   });
 
+  /* ============ BEFORE / AFTER SLIDER ============ */
+  const baSlider = document.getElementById("baSlider");
+  if (baSlider) {
+    const baBefore = document.getElementById("baBefore");
+    const baAfter = document.getElementById("baAfter");
+    const baHandle = document.getElementById("baHandle");
+    const baRange = document.getElementById("baRange");
+    let baDragging = false;
+
+    const setBA = (pct) => {
+      pct = Math.min(100, Math.max(0, pct));
+      baHandle.style.left = pct + "%";
+      baRange.value = pct;
+      const t = pct / 100;
+      baBefore.style.opacity = t;
+      baAfter.style.opacity = 1 - t;
+      if (!prefersReducedMotion) {
+        baBefore.style.transform = `scale(${1 + t * 0.12})`;
+        baAfter.style.transform = `scale(${1 + (1 - t) * 0.12})`;
+      }
+    };
+
+    const pctFromEvent = (clientX) => {
+      const rect = baSlider.getBoundingClientRect();
+      return ((clientX - rect.left) / rect.width) * 100;
+    };
+
+    baSlider.addEventListener("pointerdown", (e) => {
+      baDragging = true;
+      baSlider.setPointerCapture(e.pointerId);
+      setBA(pctFromEvent(e.clientX));
+    });
+    baSlider.addEventListener("pointermove", (e) => {
+      if (!baDragging) return;
+      setBA(pctFromEvent(e.clientX));
+    });
+    ["pointerup", "pointercancel"].forEach(evt =>
+      baSlider.addEventListener(evt, () => { baDragging = false; })
+    );
+    baRange.addEventListener("input", (e) => setBA(Number(e.target.value)));
+
+    setBA(50);
+  }
+
 })();

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=12">
+<link rel="stylesheet" href="css/style.css?v=13">
 </head>
 <body>
 
@@ -156,6 +156,37 @@
         </p>
         <p class="agitate-bridge reveal" data-reveal>None of that is permanent. It's just been waiting for the right team.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ BEFORE / AFTER SLIDER ============ -->
+  <section class="transformation" id="transformation">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow reveal" data-reveal>Real results</p>
+        <h2 class="section-title reveal" data-reveal>See the difference for yourself</h2>
+        <p class="section-lead reveal" data-reveal>Drag the slider to see this bathroom go from worn and outdated to a clean, modern retreat.</p>
+      </div>
+
+      <div class="ba-slider reveal" data-reveal id="baSlider">
+        <div class="ba-stage">
+          <img src="images/bathroom-renovation-before.webp" alt="Bathroom before renovation: cracked red tiles, damaged vanity unit" class="ba-img ba-before" id="baBefore">
+          <img src="images/bathroom-renovation-after.jpg" alt="Bathroom after renovation: modern grey tiling, new vanity and suite" class="ba-img ba-after" id="baAfter">
+        </div>
+
+        <div class="ba-tag ba-tag-before">Before</div>
+        <div class="ba-tag ba-tag-after">After</div>
+
+        <div class="ba-handle" id="baHandle">
+          <div class="ba-handle-line"></div>
+          <div class="ba-handle-grip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6 3 12l6 6M15 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <input type="range" class="ba-range" id="baRange" min="0" max="100" value="50" aria-label="Slide to compare before and after bathroom photos">
+      </div>
+      <p class="ba-hint reveal" data-reveal>Drag left or right to compare</p>
     </div>
   </section>
 
@@ -453,6 +484,6 @@
   </a>
 </div>
 
-<script src="js/main.js?v=2"></script>
+<script src="js/main.js?v=3"></script>
 </body>
 </html>
