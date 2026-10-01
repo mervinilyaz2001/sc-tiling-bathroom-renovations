@@ -35,7 +35,7 @@
   });
 
   /* ============ SCROLL REVEAL ============ */
-  const revealGroups = document.querySelectorAll(".pain-list, .service-grid, .gallery-grid, .why-list");
+  const revealGroups = document.querySelectorAll(".pain-list, .service-grid, .gallery-grid, .why-list, .trade-tags");
   revealGroups.forEach(group => {
     Array.from(group.children).forEach((child, i) => {
       if (child.hasAttribute("data-reveal")) child.style.setProperty("--i", i);
