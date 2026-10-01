@@ -307,6 +307,103 @@
     setBA(50);
   }
 
+  /* ============ TRADE SERVICE MODAL ============ */
+  const tradeModal = document.getElementById("tradeModal");
+  if (tradeModal) {
+    const tradeModalBody = document.getElementById("tradeModalBody");
+    const tradeModalClose = document.getElementById("tradeModalClose");
+    const tradeTags = document.querySelectorAll(".trade-tag[data-trade]");
+    let lastTradeTrigger = null;
+
+    const tradeContent = {
+      plumbing: {
+        title: "Plumbing",
+        intro: "Tiling and plumbing go hand in hand. Every tap, shower valve, and drain needs to be in the right spot before a single tile goes down, so we coordinate directly with our plumber instead of leaving you to manage two separate trades.",
+        items: [
+          "Moving or adding pipework for a new layout",
+          "Shower valves, mixer taps, and heated towel rails",
+          "Toilet and basin relocations",
+          "Fixing leaks found once old tiles come up"
+        ],
+        cta: "Ask About Plumbing"
+      },
+      electrical: {
+        title: "Electrical",
+        intro: "Bathrooms and kitchens have their own electrical rules. Extractor fans, shaver sockets, and lighting all need to be installed to the right standard, especially near water. Our electrician works alongside us so the wiring is sorted before tiling starts, not patched in afterward.",
+        items: [
+          "Extractor fans and humidity sensors",
+          "Shower electrics and isolator switches",
+          "LED niche lighting and spotlights",
+          "Socket and switch relocations"
+        ],
+        cta: "Ask About Electrical"
+      },
+      carpentry: {
+        title: "Carpentry",
+        intro: "Floating vanities, boxed-in pipework, built-in storage, and uneven stud walls all need a carpenter before tiling can start cleanly. We bring one in as part of the job instead of leaving you to find someone and coordinate timing yourself.",
+        items: [
+          "Building and fitting vanity units",
+          "Boxing in pipes and cisterns",
+          "Timber stud walls for wet rooms",
+          "Door and skirting adjustments after a layout change"
+        ],
+        cta: "Ask About Carpentry"
+      },
+      painting: {
+        title: "Painting",
+        intro: "Once the tiling and fittings are in, most bathrooms and kitchens still need the ceiling, woodwork, or an adjoining hallway painted to finish the room off properly. We can bring in a painter at the end of the job so you're not left doing it yourself or booking someone separately.",
+        items: [
+          "Ceilings and moisture-resistant paint",
+          "Woodwork, skirting, and door frames",
+          "Touch-ups where new tiling meets existing walls",
+          "Adjoining areas affected by the renovation"
+        ],
+        cta: "Ask About Painting"
+      }
+    };
+
+    const closeTradeModal = () => {
+      tradeModal.classList.remove("open");
+      document.body.style.overflow = "";
+      if (lastTradeTrigger) lastTradeTrigger.focus();
+    };
+
+    const openTradeModal = (tag) => {
+      const data = tradeContent[tag.dataset.trade];
+      if (!data) return;
+      const iconHTML = tag.querySelector(".trade-tag-icon").innerHTML;
+      tradeModalBody.innerHTML = `
+        <div class="trade-modal-icon">${iconHTML}</div>
+        <h3 id="tradeModalTitle">${data.title}</h3>
+        <p>${data.intro}</p>
+        <ul>${data.items.map(item => `<li>${item}</li>`).join("")}</ul>
+        <a href="#contact" class="btn btn-primary btn-wide" id="tradeModalCta">${data.cta}</a>
+      `;
+      tradeModalBody.scrollTop = 0;
+      lastTradeTrigger = tag;
+      tradeModal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      tradeModalClose.focus();
+      document.getElementById("tradeModalCta").addEventListener("click", closeTradeModal);
+    };
+
+    tradeTags.forEach(tag => {
+      tag.addEventListener("click", () => openTradeModal(tag));
+      tag.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openTradeModal(tag);
+        }
+      });
+    });
+
+    tradeModalClose.addEventListener("click", closeTradeModal);
+    tradeModal.addEventListener("click", (e) => { if (e.target === tradeModal) closeTradeModal(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && tradeModal.classList.contains("open")) closeTradeModal();
+    });
+  }
+
   /* ============ COOKIE CONSENT BANNER ============ */
   const cookieBanner = document.getElementById("cookieBanner");
   if (cookieBanner) {

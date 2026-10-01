@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=19">
+<link rel="stylesheet" href="css/style.css?v=20">
 </head>
 <body>
 
@@ -246,19 +246,19 @@
       </div>
 
       <div class="trade-tags">
-        <div class="trade-tag reveal" data-reveal>
+        <div class="trade-tag reveal" data-reveal data-trade="plumbing" tabindex="0" role="button" aria-haspopup="dialog" aria-label="More about plumbing">
           <span class="trade-tag-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 7.5a4.5 4.5 0 0 1-6.14 4.2L7 19.5a2 2 0 0 1-2.8-2.8l7.8-7.86A4.5 4.5 0 0 1 18 3.5l-3 3 1 1 3-3c.3.9.5 1.9.5 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
           <span>Plumbing</span>
         </div>
-        <div class="trade-tag reveal" data-reveal>
+        <div class="trade-tag reveal" data-reveal data-trade="electrical" tabindex="0" role="button" aria-haspopup="dialog" aria-label="More about electrical">
           <span class="trade-tag-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
           <span>Electrical</span>
         </div>
-        <div class="trade-tag reveal" data-reveal>
+        <div class="trade-tag reveal" data-reveal data-trade="carpentry" tabindex="0" role="button" aria-haspopup="dialog" aria-label="More about carpentry">
           <span class="trade-tag-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14.5 3.5 20 9l-2.5 2.5-5.5-5.5 2.5-2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12.5 8.5 4 17l-1 4 4-1 8.5-8.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
           <span>Carpentry</span>
         </div>
-        <div class="trade-tag reveal" data-reveal>
+        <div class="trade-tag reveal" data-reveal data-trade="painting" tabindex="0" role="button" aria-haspopup="dialog" aria-label="More about painting">
           <span class="trade-tag-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="7" width="10" height="5" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M17 8h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2" stroke="currentColor" stroke-width="1.6"/><path d="M8 12v9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M6 21h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
           <span>Painting</span>
         </div>
@@ -338,6 +338,14 @@
       <img id="lightboxImg" src="" alt="">
       <figcaption id="lightboxCaption"></figcaption>
     </figure>
+  </div>
+
+  <!-- ============ TRADE SERVICE MODAL ============ -->
+  <div class="trade-modal" id="tradeModal" role="dialog" aria-modal="true" aria-labelledby="tradeModalTitle">
+    <div class="trade-modal-panel">
+      <button class="trade-modal-close" id="tradeModalClose" aria-label="Close">&times;</button>
+      <div class="trade-modal-body" id="tradeModalBody"></div>
+    </div>
   </div>
 
   <!-- ============ PROCESS ============ -->
@@ -544,6 +552,6 @@
   </div>
 </div>
 
-<script src="js/main.js?v=8"></script>
+<script src="js/main.js?v=9"></script>
 </body>
 </html>
