@@ -318,24 +318,32 @@
     const tradeContent = {
       plumbing: {
         title: "Plumbing",
-        intro: "Tiling and plumbing go hand in hand. Every tap, shower valve, and drain needs to be in the right spot before a single tile goes down, so we coordinate directly with our plumber instead of leaving you to manage two separate trades.",
+        intro: "Tiling and plumbing go hand in hand. Every tap, shower valve, and drain needs to sit in exactly the right spot before a single tile goes down, so we bring in a plumber as part of the job instead of leaving you to manage two separate trades on two separate schedules.",
         items: [
           "Moving or adding pipework for a new layout",
           "Shower valves, mixer taps, and heated towel rails",
-          "Toilet and basin relocations",
-          "Fixing leaks found once old tiles come up"
+          "Toilet, basin, and bidet relocations",
+          "Fixing leaks found once old tiles come up",
+          "Connecting new fittings to existing stopcocks and waste runs",
+          "Pressure and flow checks before anything gets tiled over"
         ],
+        note: "The plumber works to our schedule, not the other way round. Pipework gets first-fixed, tested, and signed off before waterproofing and tiling starts, so nothing gets covered up that shouldn't be.",
+        closing: "Mention it when you book your consultation and we'll scope the plumbing alongside the tiling. One visit, one quote.",
         cta: "Ask About Plumbing"
       },
       electrical: {
         title: "Electrical",
-        intro: "Bathrooms and kitchens have their own electrical rules. Extractor fans, shaver sockets, and lighting all need to be installed to the right standard, especially near water. Our electrician works alongside us so the wiring is sorted before tiling starts, not patched in afterward.",
+        intro: "Bathrooms and kitchens have their own electrical rules. Extractor fans, shaver sockets, and lighting near water all need to meet specific zoning regulations, and getting it wrong means ripping out finished tiling to fix it. Our electrician works to the same schedule we do, so wiring is signed off before tiling starts, not patched in after.",
         items: [
           "Extractor fans and humidity sensors",
           "Shower electrics and isolator switches",
           "LED niche lighting and spotlights",
-          "Socket and switch relocations"
+          "Socket and switch relocations",
+          "Underfloor heating wiring and thermostats",
+          "Consumer unit checks where older wiring needs upgrading"
         ],
+        note: "Electrical work in a wet zone is one of the few places it genuinely isn't worth cutting corners. We only work with a qualified, insured electrician who certifies the work, so you've got proper documentation if you ever sell the house.",
+        closing: "Flag it at your consultation and we'll bring the electrician out at the same time as the site visit.",
         cta: "Ask About Electrical"
       },
       carpentry: {
@@ -345,19 +353,27 @@
           "Building and fitting vanity units",
           "Boxing in pipes and cisterns",
           "Timber stud walls for wet rooms",
-          "Door and skirting adjustments after a layout change"
+          "Door and skirting adjustments after a layout change",
+          "Levelling out uneven walls and floors before tiling",
+          "Fitted shelving and recessed storage"
         ],
+        note: "A lot of tiling problems actually start with bad carpentry underneath: walls that aren't square, battens that aren't level, stud work that moves. Our carpenter builds to a standard that holds a tiled finish properly, not just whatever's quickest.",
+        closing: "Tell us what you've got in mind and we'll work out what carpentry the job actually needs before you're quoted.",
         cta: "Ask About Carpentry"
       },
       painting: {
         title: "Painting",
-        intro: "Once the tiling and fittings are in, most bathrooms and kitchens still need the ceiling, woodwork, or an adjoining hallway painted to finish the room off properly. We can bring in a painter at the end of the job so you're not left doing it yourself or booking someone separately.",
+        intro: "Once the tiling and fittings are in, most bathrooms and kitchens still need the ceiling, woodwork, or an adjoining hallway painted to finish the room off properly. We can bring in a painter at the end of the job so you're not left doing it yourself or booking someone separately once your house is already disrupted.",
         items: [
           "Ceilings and moisture-resistant paint",
           "Woodwork, skirting, and door frames",
           "Touch-ups where new tiling meets existing walls",
-          "Adjoining areas affected by the renovation"
+          "Adjoining areas affected by the renovation",
+          "Colour matching to existing paintwork",
+          "Filling and sanding before paint goes on"
         ],
+        note: "Painting is usually the last job on site, so it gets scheduled around the tiling finishing, not the other way round. No waiting around for a separate tradesman to become free once we're already done.",
+        closing: "Ask about it when we're costing the rest of the job and we'll fold it into the same quote.",
         cta: "Ask About Painting"
       }
     };
@@ -377,6 +393,8 @@
         <h3 id="tradeModalTitle">${data.title}</h3>
         <p>${data.intro}</p>
         <ul>${data.items.map(item => `<li>${item}</li>`).join("")}</ul>
+        <p>${data.note}</p>
+        <p class="trade-modal-closing">${data.closing}</p>
         <a href="#contact" class="btn btn-primary btn-wide" id="tradeModalCta">${data.cta}</a>
       `;
       tradeModalBody.scrollTop = 0;

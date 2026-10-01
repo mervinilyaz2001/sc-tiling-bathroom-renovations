@@ -661,6 +661,10 @@ button{ font-family:inherit; cursor:pointer; }
 .trade-modal-body p{ color: var(--clr-ink-soft); line-height:1.75; margin:0 0 16px; font-size:.98rem; }
 .trade-modal-body ul{ margin:0 0 28px; padding-left:20px; list-style:disc; }
 .trade-modal-body li{ color: var(--clr-ink-soft); line-height:1.7; margin-bottom:8px; }
+.trade-modal-body p.trade-modal-closing{
+  font-family: var(--font-display); font-style:italic; font-weight:400;
+  color: var(--clr-accent-dark); font-size:1.05rem; line-height:1.6;
+}
 
 /* ============================================================
    PROCESS
