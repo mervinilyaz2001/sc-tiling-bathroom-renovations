@@ -9,8 +9,9 @@
 
   /* ============ HEADER: solid on scroll ============ */
   const header = document.getElementById("siteHeader");
+  const hasHero = !!document.getElementById("hero");
   const onHeaderScroll = () => {
-    header.classList.toggle("scrolled", window.scrollY > 60);
+    header.classList.toggle("scrolled", !hasHero || window.scrollY > 60);
   };
   onHeaderScroll();
   window.addEventListener("scroll", onHeaderScroll, { passive: true });
@@ -29,6 +30,9 @@
   menuToggle.addEventListener("click", () => setMenu(!mobileMenu.classList.contains("open")));
   mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
   mobileMenuOverlay.addEventListener("click", () => setMenu(false));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && mobileMenu.classList.contains("open")) setMenu(false);
+  });
 
   /* ============ SCROLL REVEAL ============ */
   const revealGroups = document.querySelectorAll(".pain-list, .service-grid, .gallery-grid, .why-list");
@@ -55,7 +59,7 @@
 
   /* ============ CURSOR GLOW (desktop only) ============ */
   const cursorGlow = document.querySelector(".cursor-glow");
-  if (isFinePointer && !prefersReducedMotion) {
+  if (cursorGlow && isFinePointer && !prefersReducedMotion) {
     let gx = 0, gy = 0, cx = 0, cy = 0;
     window.addEventListener("mousemove", (e) => {
       gx = e.clientX; gy = e.clientY;
@@ -133,57 +137,71 @@
   let visibleItems = [];
   let currentIndex = 0;
 
-  const refreshVisibleItems = () => {
-    visibleItems = Array.from(galleryItems).filter(item => !item.classList.contains("filtered-out"));
-  };
+  if (lightbox) {
+    const refreshVisibleItems = () => {
+      visibleItems = Array.from(galleryItems).filter(item => !item.classList.contains("filtered-out"));
+    };
 
-  const openLightbox = (item) => {
-    refreshVisibleItems();
-    currentIndex = visibleItems.indexOf(item);
-    showLightboxImage();
-    lightbox.classList.add("open");
-    document.body.style.overflow = "hidden";
-  };
+    const openLightbox = (item) => {
+      refreshVisibleItems();
+      currentIndex = visibleItems.indexOf(item);
+      showLightboxImage();
+      lightbox.classList.add("open");
+      document.body.style.overflow = "hidden";
+    };
 
-  const showLightboxImage = () => {
-    const item = visibleItems[currentIndex];
-    const img = item.querySelector("img");
-    const caption = item.querySelector("figcaption");
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    lightboxCaption.textContent = caption ? caption.textContent : "";
-  };
+    const showLightboxImage = () => {
+      const item = visibleItems[currentIndex];
+      const img = item.querySelector("img");
+      const caption = item.querySelector("figcaption");
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightboxCaption.textContent = caption ? caption.textContent : "";
+    };
 
-  const closeLightbox = () => {
-    lightbox.classList.remove("open");
-    document.body.style.overflow = "";
-  };
+    const closeLightbox = () => {
+      lightbox.classList.remove("open");
+      document.body.style.overflow = "";
+    };
 
-  galleryItems.forEach(item => item.addEventListener("click", () => openLightbox(item)));
-  lightboxClose.addEventListener("click", closeLightbox);
-  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
-  lightboxPrev.addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
-    showLightboxImage();
-  });
-  lightboxNext.addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % visibleItems.length;
-    showLightboxImage();
-  });
-  document.addEventListener("keydown", (e) => {
-    if (!lightbox.classList.contains("open")) return;
-    if (e.key === "Escape") closeLightbox();
-    if (e.key === "ArrowLeft") lightboxPrev.click();
-    if (e.key === "ArrowRight") lightboxNext.click();
-  });
+    galleryItems.forEach(item => {
+      item.addEventListener("click", () => openLightbox(item));
+      item.setAttribute("tabindex", "0");
+      item.setAttribute("role", "button");
+      const caption = item.querySelector("figcaption");
+      item.setAttribute("aria-label", `View larger photo: ${caption ? caption.textContent : "gallery image"}`);
+      item.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openLightbox(item);
+        }
+      });
+    });
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+    lightboxPrev.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+      showLightboxImage();
+    });
+    lightboxNext.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % visibleItems.length;
+      showLightboxImage();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (!lightbox.classList.contains("open")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") lightboxPrev.click();
+      if (e.key === "ArrowRight") lightboxNext.click();
+    });
 
-  /* swipe support on lightbox for touch */
-  let touchStartX = 0;
-  lightbox.addEventListener("touchstart", (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
-  lightbox.addEventListener("touchend", (e) => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 50) (dx > 0 ? lightboxPrev : lightboxNext).click();
-  }, { passive: true });
+    /* swipe support on lightbox for touch */
+    let touchStartX = 0;
+    lightbox.addEventListener("touchstart", (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    lightbox.addEventListener("touchend", (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) (dx > 0 ? lightboxPrev : lightboxNext).click();
+    }, { passive: true });
+  }
 
   /* ============ PROCESS TIMELINE FILL ============ */
   const timeline = document.getElementById("timeline");
@@ -208,7 +226,7 @@
   /* ============ BACK TO TOP + MOBILE CTA BAR ============ */
   const backToTop = document.getElementById("backToTop");
   const mobileCtaBar = document.getElementById("mobileCtaBar");
-  const heroHeight = () => hero.offsetHeight;
+  const heroHeight = () => (hero ? hero.offsetHeight : 0);
 
   const onScrollToggles = () => {
     const y = window.scrollY;
@@ -222,18 +240,20 @@
   /* ============ CONTACT FORM (front-end only) ============ */
   const contactForm = document.getElementById("contactForm");
   const formSuccess = document.getElementById("formSuccess");
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!contactForm.checkValidity()) {
-      contactForm.reportValidity();
-      return;
-    }
-    // NOTE: front-end only. Wire this up to a real form backend
-    // (Formspree / Netlify Forms / EmailJS) before going live.
-    formSuccess.classList.add("show");
-    contactForm.reset();
-    setTimeout(() => formSuccess.classList.remove("show"), 5000);
-  });
+  if (contactForm) {
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        return;
+      }
+      // NOTE: front-end only. Wire this up to a real form backend
+      // (Formspree / Netlify Forms / EmailJS) before going live.
+      formSuccess.classList.add("show");
+      contactForm.reset();
+      setTimeout(() => formSuccess.classList.remove("show"), 5000);
+    });
+  }
 
   /* ============ BEFORE / AFTER SLIDER ============ */
   const baSlider = document.getElementById("baSlider");
@@ -285,6 +305,26 @@
     baRange.addEventListener("input", (e) => setBA(Number(e.target.value)));
 
     setBA(50);
+  }
+
+  /* ============ COOKIE CONSENT BANNER ============ */
+  const cookieBanner = document.getElementById("cookieBanner");
+  if (cookieBanner) {
+    const COOKIE_KEY = "sct-cookie-choice";
+    let storedChoice = null;
+    try { storedChoice = localStorage.getItem(COOKIE_KEY); } catch (e) { /* storage unavailable */ }
+
+    if (!storedChoice) {
+      setTimeout(() => cookieBanner.classList.add("show"), 900);
+    }
+
+    const setChoice = (value) => {
+      cookieBanner.classList.remove("show");
+      try { localStorage.setItem(COOKIE_KEY, value); } catch (e) { /* storage unavailable */ }
+    };
+
+    document.getElementById("cookieAccept")?.addEventListener("click", () => setChoice("accepted"));
+    document.getElementById("cookieDecline")?.addEventListener("click", () => setChoice("declined"));
   }
 
 })();
